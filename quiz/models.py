@@ -1,39 +1,36 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
-class TimeStampMixin(models.Model):
+class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
-class Quiz(models.Model):
-    title = models.TextField(max_length=1000)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.title
-
-class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class Question(TimeStampedModel):
+    # id  primary key
+    text = models.TextField(default='', verbose_name='คำถาม')
 
     def __str__(self):
         return self.text
 
-class Answer(models.Model):
+    class Meta:
+        verbose_name_plural = 'คำถาม'
+        verbose_name = 'คำถาม'
+
+
+class Answer(TimeStampedModel):
+    # id  primary key
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    text = models.CharField(max_length=500)
-    is_correct = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    text = models.TextField(default='', verbose_name='คำตอบ')
+    correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.text
+        x = '/' if self.correct else 'x'
+        return f'{x} {self.text}'
+
+    class Meta:
+        verbose_name_plural = 'คำตอบ'
+        verbose_name = 'คำตอบ'
 

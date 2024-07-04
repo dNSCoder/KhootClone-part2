@@ -1,11 +1,8 @@
 from django.urls import path
-from quiz.views import *
+
+from quiz import views
 
 urlpatterns = [
-    path('', home),
-    path('create/', create),
-    path('json/', json),
-    path('pdf/', pdf),
-    path('bg/', bg),
-    path('blurbg/', blurbg),
+    path('', views.index, name='quiz-index'),
+    path('image/', views.image, name='quiz-image'),
 ]
