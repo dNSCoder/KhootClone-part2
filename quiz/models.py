@@ -19,7 +19,6 @@ class Question(TimeStampedModel):
         verbose_name_plural = 'คำถาม'
         verbose_name = 'คำถาม'
 
-
 class Answer(TimeStampedModel):
     # id  primary key
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

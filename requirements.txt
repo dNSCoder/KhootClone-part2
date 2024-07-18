@@ -2,3 +2,8 @@ django
 pillow
 reportlab
 httpie
+requests
+mysqlclient
+psycopg
+ipython
+pyyaml
