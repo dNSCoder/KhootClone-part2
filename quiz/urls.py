@@ -1,10 +1,13 @@
 from django.urls import path
-
-from quiz import views
+from quiz.views import *
 
 urlpatterns = [
-    #path('', views.index, name='quiz-index'),
-    path('', views.home, name='quiz-home'),
-    path('users/', views.users, name='quiz-users'),
-    path('image/', views.image, name='quiz-image'),
+    path('', home, name='quiz-home'),
+    path('users/', users, name='quiz-users'),
+    path('create/', create),
+    path('json/', json),
+    path('pdf/', pdf),
+    path('bg/', bg),
+    path('blurbg/', blurbg),
 ]
+

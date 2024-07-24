@@ -1,0 +1,24 @@
+- model: quiz.Choice
+  pk: 1
+  fields:
+    question: 1
+    text: ชลบุรี
+    correct: False
+- model: quiz.Choice
+  pk: 2
+  fields:
+    question: 1
+    text: นครศรีธรรมราช
+    correct: True
+- model: quiz.Choice
+  pk: 3
+  fields:
+    question: 1
+    text: นครราชสีมา
+    correct: False
+- model: quiz.Choice
+  pk: 4
+  fields:
+    question: 1
+    text: ระยอง
+    correct: False

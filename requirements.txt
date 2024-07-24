@@ -1,9 +1,10 @@
 django
-pillow
-reportlab
 httpie
-requests
-mysqlclient
-psycopg
-ipython
+openpyxl
+pillow
 pyyaml
+reportlab
+ipython
+psycopg
+mysqlclient
+requests

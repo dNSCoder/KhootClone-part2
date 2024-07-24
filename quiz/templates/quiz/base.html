@@ -5,13 +5,13 @@
         <title>Quiz Home</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="flex-col min-h-screen">
-        {% include 'quiz/header.html' %}
-        <main class="flex-grow min-h-screen">
-            {% block main %}
+    <body class="flex flex-col min-h-screen">
+      {% include 'quiz/header.html' %}
+      <main class="flex flex-col grow bg-white">
+        {% block main %}
 
-            {% endblock %}
-        </main>
-        {% include 'quiz/footer.html' %}
+        {% endblock %}
+      </main>
+      {% include 'quiz/footer.html' %}
     </body>
 </html>

@@ -5,11 +5,40 @@
         <title>Quiz Home</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="flex-col min-h-screen">
-        {% include 'quiz/header.html' %}
-        <main class="flex-grow min-h-screen">
-            MAIN BODY
-        </main>
-        {% include 'quiz/footer.html' %}
+    <body class="flex flex-col min-h-screen">
+      <header class="w-full md:w-2/3 flex-col border-b-2 mx-auto pt-10">
+        <div class="w-full flex text-green-700">
+          <div class="text-3xl px-4 hover:animate-pulse"><a href="{% url 'quiz-home' %}">uQuiz</a></div>
+          <div class="grow flex justify-around items-center text-zinc-700">
+            <div class="w-full hidden md:flex md:justify-around">
+              <a href="#" class="transition ease-in-out delay-150 hover:text-green-700 px-4 hover:border hover:border-green-100 hover:rounded-xl">menu 1</a>
+              <a href="#" class="hover:text-green-700">menu 2</a>
+              <a href="{% url 'quiz-users' %}">users</a>
+            </div>
+            <div class="w-full flex md:hidden justify-around">
+              <input class="border-green-400 border rounded-xl px-4" type="text" value="text" />
+            </div>
+          </div>
+          <div class="right flex items-center justify-around flex-row-reverse md:flex-row">
+            <a href="#" class="px-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+            </a>
+            <a href="#" class="px-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="w-full flex justify-around md:hidden pt-6">
+              <a href="#">menu 1</a>
+              <a href="#">menu 2</a>
+              <a href="#">menu 3</a>
+        </div>
+      </header>
+      <main class="flex flex-col grow bg-white">
+        <h1 class="text-center">QUIZ HOME</h1>
+      </main>
+      <footer class="w-full h-10 bg-green-700 text-white text-center text-xs py-4">
+        Copyleft © uQuiz All Seats Reserved.
+      </footer>
     </body>
 </html>
