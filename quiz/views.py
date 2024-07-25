@@ -6,19 +6,28 @@ from reportlab.pdfgen import canvas
 from PIL import Image, ImageFilter, ImageDraw
 from django.contrib.auth.models import User
 
+from quiz.forms import QuestionForm
+from quiz.models import *
+
 # Create your views here.
 def home(req):
     #return HttpResponse('This is quiz home.')
     return render(req, 'quiz/home.html')
 
 def users(req):
+    #if req.method == 'GET':
     context = {
-        'questions': User.objects.count(),
-        'users': User.objects.all(),
+        'questions': Question.objects.count(),
+        'user_count': User.objects.count(),
+        'object_list': User.objects.all(),
     }
     return render(req, 'quiz/users.html', context)
 
 def create(req):
+    if req.method == 'POST':
+        form = QuestionForm(req.POST)
+        if form.is_valid():
+            form.save()
     return HttpResponse('creating a quiz...')
 
 def json(req):

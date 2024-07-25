@@ -1,0 +1,15 @@
+{% extends 'quiz/base.html' %}
+
+{% block main %}
+
+<div class="flex flex-col mx-10 justify-around">
+    <form action="{% url 'quiz-choice-create' %}" method="POST">
+        <div class="shadow-xl mx-auto">{{ form.question }}</div>
+        <div class="shadow-xl mx-auto">{{ form.text }}</div>
+        <div class="shadow-xl mx-auto">{{ form.correct }}</div>
+        <button class="px-6 py-1 my-2 hover:bg-green-800 mx-auto border rounded-xl" type="submit">Submit</button>
+    </form>
+</div>
+
+
+{% endblock %}

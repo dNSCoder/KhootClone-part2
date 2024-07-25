@@ -1,12 +1,15 @@
 - model: quiz.Question
   pk: 1
   fields:
+    member: 1
     text: จังหวัดใดต่อไปนี้ไม่มีทางออกสู่ทะเล?
 - model: quiz.Question
   pk: 2
   fields:
+    member: 1
     text: สัตว์ชนิดใดต่อไปนี้ไม่ใช่สัตว์เลี้ยงลูกด้วยนม?
 - model: quiz.Question
   pk: 3
   fields:
+    member: 1
     text: ประเพณีใดต่อไปนี้จัดขึ้นในภาคเหนือของไทย?

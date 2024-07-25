@@ -12,6 +12,9 @@ class TimeStampedModel(models.Model):
 
 class Member(TimeStampedModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    quote = models.TextField()
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
     picture_url = models.CharField(max_length=500, default='')
 
     def __str__(self):

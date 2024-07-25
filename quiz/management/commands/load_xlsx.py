@@ -48,7 +48,7 @@ class Command(BaseCommand):
                         print(type(field), field)
                         try:
                             if type(field) in [OneToOneField, ForeignKey] and value is not None:
-                                data[k] = field.related_model.objects.get(id=value)
+                                data[k] = field.related_model.objects.get(id=int(value))
                             elif type(field) == DateTimeField and value is not None:
                                 data[k] = value.isoformat()
                             elif type(field) == DateField and value is not None:

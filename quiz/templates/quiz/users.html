@@ -2,9 +2,14 @@
 
 {% block main %}
 
-<div>จำนวนคำถาม {{ questions }} คำถาม</div>
+<div>users in the system {{ user_count }} users</div>
 
-<div>ผู้เล่นในระบบ {{ users }}</div>
+<div class="flex flex-wrap mx-10 justify-around">
+    {% for user in object_list %}
+        {% include 'quiz/components/user.html' %}
+    {% endfor %}
+    </ol>
+</div>
 
 
 {% endblock %}

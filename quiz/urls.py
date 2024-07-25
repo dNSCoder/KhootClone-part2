@@ -1,13 +1,29 @@
 from django.urls import path
 from quiz.views import *
+from quiz.classview import *
 
 urlpatterns = [
     path('', home, name='quiz-home'),
-    path('users/', users, name='quiz-users'),
+    #path('users/', users, name='quiz-users'),
+    path('users/', UserView.as_view(), name='quiz-users'),
+    path('users2/', UserTemplateView.as_view(), name='quiz-users-2'),
+    path('users3/', UserListView.as_view(), name='quiz-users-3'),
+    path('user/<int:pk>/', UserDetailView.as_view(), name='quiz-user-detail'),
+    #path('username/<slug:slug>/', UserDetailView.as_view(), name='quiz-user-slug'),
     path('create/', create),
     path('json/', json),
     path('pdf/', pdf),
     path('bg/', bg),
     path('blurbg/', blurbg),
+
+    path('question/create/', QuestionCreateView.as_view(), name='quiz-question-create'),
+
+    path('choice/create/', ChoiceCreateView.as_view(), name='quiz-choice-create'),
+    path('choice/update/<int:pk>/', ChoiceUpdateView.as_view(), name='quiz-choice-update'),
+    path('choice/delete/<int:pk>/', ChoiceDeleteView.as_view(), name='quiz-choice-delete'),
+
+    path('user/delete/<int:pk>/', UserDeleteView.as_view(), name='quiz-user-delete'),
+    #path('user/update/<int:pk>/', UserUpdateView.as_view(), name='quiz-user-update'),
+    #path('user/create/', UserCreateView.as_view(), name='quiz-user-create'),
 ]
 

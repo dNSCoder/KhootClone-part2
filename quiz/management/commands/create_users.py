@@ -19,7 +19,6 @@ class Command(BaseCommand):
 
         for i in range(n):
             u = requests.get(url).json()['results'][0]
-            print(u)
             user, created = User.objects.get_or_create(
                 username=u['login']['username'], 
                 email=u['email']
@@ -28,7 +27,14 @@ class Command(BaseCommand):
                 user.set_password('1234')
                 user.first_name = u['name']['first']
                 user.last_name = u['name']['last']
+                user.save()
+                quote = requests.get(f'https://dummyjson.com/quotes/{user.id}').json()['quote']
                 member = Member.objects.create(
                     user = user,
+                    quote = quote,
+                    state = u['location']['state'],
+                    country = u['location']['country'],
                     picture_url = u['picture']['medium'],
                 )
+                member.save()
+                print(user.id, user.username, member.quote)
