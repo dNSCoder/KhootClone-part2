@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-    <head>
-        <meta charset="UTF-8"></meta>
-        <title>Quiz Home</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="flex flex-col min-h-screen">
-      {% include 'quiz/header.html' %}
-      <main class="flex flex-col grow bg-white">
-        {% block main %}
+  <head>
+    <meta charset="UTF-8"></meta>
+    <title>Quiz Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+* {
+  font-family: "Alegreya", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    {% include 'quiz/header.html' %}
+    <main class="flex flex-col grow bg-white">
+      {% block main %}
 
-        {% endblock %}
-      </main>
-      {% include 'quiz/footer.html' %}
-    </body>
+      {% endblock %}
+    </main>
+    {% include 'quiz/footer.html' %}
+  </body>
 </html>

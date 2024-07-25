@@ -1,0 +1,51 @@
+{% extends 'quiz/base.html' %}
+
+{% block main %}
+
+<div class="flex flex-col mx-10 justify-around">
+  <img class="z-10 w-36 h-36 mx-auto mt-10 shadow-xl rounded-full"
+  src="{{ form.instance.picture_url }}" alt="profile"/>
+  <div class="w-[640px] mx-auto shadow-xl rounded-xl mt-[-32px] mb-10 p-10 bg-zinc-100">
+    <form action="{% url 'quiz-member-update' pk=form.instance.id %}" method="POST">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          User
+        </label>
+        <select id="id_user" name="user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "> 
+          {% for w in form.user.subwidgets %}
+            {% if w.data.selected %}
+            <option selected="true" value="{{ w.data.value }}">{{ w.data.label }}</option>
+            {% else %}
+              {{ w }}
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          Quote
+        </label>
+        <textarea id="id_quote" rows="4" placeholder="quote" name="quote"
+          class="block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ form.quote.value }}</textarea>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          State
+        </label>
+        <input id="id_state" type="text" placeholder="state" name="state" value="{{ form.state.value }}"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          Country
+        </label>
+        <input id="id_country" type="text" placeholder="country" name="country" value="{{ form.country.value }}"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="py-2"><button class="px-6 py-1 my-2 hover:bg-green-700 hover:text-white bg-green-100 mx-auto border rounded-xl" type="submit">Submit</button></div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

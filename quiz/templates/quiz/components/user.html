@@ -1,25 +1,33 @@
-<figure class="my-4 max-w-96 md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-  <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-       src="{{ user.member.picture_url }}" alt="" width="384" height="512">
-  <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+<figure class="md:flex bg-slate-100 max-w-96 rounded-xl m-8 p-8 shadow-md">
+  <img class="w-24 h-24 rounded-full mx-auto" src="{{ user.member.picture_url }}" alt="" width="384" height="512">
+  <div class="pt-6 text-center space-y-4">
     <blockquote>
       <p class="text-lg font-medium">
-        “{{ user.member.quote }}”
+      “{{ user.member.quote }}”
       </p>
     </blockquote>
-    <figcaption class="font-medium">
-      <div class="text-sky-500 dark:text-sky-400">
-        {{ user.first_name}} {{ user.last_name }}
-      </div>
-      <div class="text-slate-700 dark:text-slate-500">
-        {{ user.member.state }}, {{ user.member.country }}
-      </div>
-      <div class="w-full text-slate-700 dark:text-slate-500 flex justify-around">
-        <a href="{% url 'quiz-user-delete' pk=user.id %}"
-           class="inline px-8 py-2 rounded-xl hover:bg-red-400">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="22" y1="8" y2="13"/><line x1="22" x2="17" y1="8" y2="13"/></svg>
-        </a>
+    <div class="h-10 text-sky-500 flex-grow">
+      <span>
+        {{ user.first_name }} {{ user.last_name }}
+      </span>
+    </div>
+    <figcaption class="font-medium grow">
+      <div class="text-green-700">
+        <span class="text-xs">{{ user.member.state }}</span>,
+        <span class="font-bold">{{ user.member.country }}</span>
       </div>
     </figcaption>
+    <div class="w-full text-green-700 flex justify-around ">
+      <a href="{% url 'quiz-member-update' pk=user.id %}"
+         class="py-2 w-12 flex text-blue-500 justify-around rounded-xl hover:text-white hover:bg-blue-400 hover:shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen"><path d="M11.5 15H7a4 4 0 0 0-4 4v2"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="7" r="4"/></svg>
+      </a>
+      <a href="{% url 'quiz-user-delete' pk=user.id %}"
+         class="py-2 w-12 flex text-red-500 justify-around rounded-xl hover:text-white hover:bg-red-400 hover:shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="22" y1="8" y2="13"/><line x1="22" x2="17" y1="8" y2="13"/></svg>
+      </a>
+    </div>
   </div>
 </figure>
+
+

@@ -23,7 +23,7 @@ urlpatterns = [
     path('choice/delete/<int:pk>/', ChoiceDeleteView.as_view(), name='quiz-choice-delete'),
 
     path('user/delete/<int:pk>/', UserDeleteView.as_view(), name='quiz-user-delete'),
-    #path('user/update/<int:pk>/', UserUpdateView.as_view(), name='quiz-user-update'),
+    path('member/update/<int:pk>/', MemberUpdateView.as_view(), name='quiz-member-update'),
     #path('user/create/', UserCreateView.as_view(), name='quiz-user-create'),
 ]
 

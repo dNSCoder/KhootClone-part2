@@ -34,7 +34,7 @@ class Command(BaseCommand):
                     quote = quote,
                     state = u['location']['state'],
                     country = u['location']['country'],
-                    picture_url = u['picture']['medium'],
+                    picture_url = u['picture']['large'],
                 )
                 member.save()
                 print(user.id, user.username, member.quote)

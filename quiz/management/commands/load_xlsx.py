@@ -58,6 +58,6 @@ class Command(BaseCommand):
                             print('value', type(value), value)
                             print(traceback.format_exc())
                             del data[k]
-                        obj, created = m.objects.get_or_create(**data)
+                    obj, created = m.objects.get_or_create(**data)
 
 

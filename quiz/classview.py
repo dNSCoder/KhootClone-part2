@@ -46,6 +46,11 @@ class UserDetailView(DetailView):
     model = User
     template_name = 'quiz/user.html'
 
+class MemberUpdateView(UpdateView):
+    model = Member
+    template_name = 'quiz/member_update_form.html'
+    fields = [ 'user', 'quote', 'state', 'country' ]
+
 class UserDeleteView(DeleteView):
     model = User
     template_name = 'quiz/user_confirm_delete.html'
