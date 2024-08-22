@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quiz'
+    'quiz',
+    'tailwind',
+    'theme',
+    'django_browser_reload'
 ]
 
 MIDDLEWARE = [
@@ -48,9 +51,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'KhootClone.urls'
+LOGIN_URL = 'quiz-user-login'
+LOGIN_REDIRECT_URL = 'quiz-users'
+LOGOUT_REDIRECT_URL = 'quiz-user-login'
 
 TEMPLATES = [
     {
@@ -69,7 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'KhootClone.wsgi.application'
-
+TAILWIND_APP_NAME = 'theme'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -96,8 +103,8 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-DATABASES['default'] = DATABASES['sqlite3']
-#DATABASES['default'] = DATABASES['mysql']
+# DATABASES['default'] = DATABASES['sqlite3']
+DATABASES['default'] = DATABASES['mysql']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -134,6 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

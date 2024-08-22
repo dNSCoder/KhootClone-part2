@@ -5,7 +5,6 @@ from django.http import *
 from reportlab.pdfgen import canvas
 from PIL import Image, ImageFilter, ImageDraw
 from django.contrib.auth.models import User
-
 from quiz.forms import QuestionForm
 from quiz.models import *
 

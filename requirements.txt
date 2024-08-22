@@ -8,3 +8,5 @@ ipython
 psycopg
 mysqlclient
 requests
+django-tailwind
+django-browser-reload

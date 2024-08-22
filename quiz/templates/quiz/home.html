@@ -1,9 +1,20 @@
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
+        {% tailwind_css %}
         <meta charset="UTF-8"></meta>
         <title>Quiz Home</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <style>
+          *{
+            font-family: "Kanit", serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+          }
+        </style>
     </head>
     <body class="flex flex-col min-h-screen">
       <header class="w-full md:w-2/3 flex-col border-b-2 mx-auto pt-10">
@@ -14,6 +25,7 @@
               <a href="#" class="transition ease-in-out delay-150 hover:text-green-700 px-4 hover:border hover:border-green-100 hover:rounded-xl">menu 1</a>
               <a href="#" class="hover:text-green-700">menu 2</a>
               <a href="{% url 'quiz-users' %}">users</a>
+              <a href="{% url 'quiz-user-register' %}">register</a>
             </div>
             <div class="w-full flex md:hidden justify-around">
               <input class="border-green-400 border rounded-xl px-4" type="text" value="text" />

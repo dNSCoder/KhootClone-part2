@@ -6,6 +6,9 @@
         <a href="#" class="transition ease-in-out delay-150 hover:text-green-700 px-4 hover:border hover:border-green-100 hover:rounded-xl">menu 1</a>
         <a href="#" class="hover:text-green-700">menu 2</a>
         <a href="{% url 'quiz-users' %}">users</a>
+        <a href="{% url 'quiz-user-register' %}">register</a>
+        <a href="{% url 'quiz-user-login' %}">login</a>
+        <a id="logoutBtn" href="#">logout</a>
       </div>
       <div class="w-full flex md:hidden justify-around">
         <input class="border-green-400 border rounded-xl px-4" type="text" value="text" />
@@ -25,4 +28,34 @@
     <a href="#">menu 2</a>
     <a href="#">menu 3</a>
   </div>
+  <div id="logoutDialog" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
+        <h2 class="text-xl font-semibold mb-4">Confirm Logout</h2>
+        <p class="mb-6">Are you sure you want to log out?</p>
+        <div class="flex justify-end">
+            <button id="cancelBtn" class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+            <form method="POST" action="{% url 'quiz-user-logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get the dialog and buttons
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutDialog = document.getElementById('logoutDialog');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    // Show the dialog when the logout button is clicked
+    logoutBtn.addEventListener('click', () => {
+        logoutDialog.classList.remove('hidden');
+    });
+
+    // Hide the dialog when the cancel button is clicked
+    cancelBtn.addEventListener('click', () => {
+        logoutDialog.classList.add('hidden');
+    });
+</script>
 </header>
