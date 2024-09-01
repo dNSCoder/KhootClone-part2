@@ -154,7 +154,7 @@ class SignUpView(CreateView):
             return self.form_invalid(form)
 
 class UserLoginView(LoginView):
-    redirect_authenticated_user = True
+    redirect_authenticated_user = True #redicret to LOGIN_REDIRECT_URLin setting
     template_name = 'quiz/member_login_form.html'
     success_url = reverse_lazy('quiz-users')
     
