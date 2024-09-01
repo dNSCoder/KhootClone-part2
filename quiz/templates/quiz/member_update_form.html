@@ -3,10 +3,12 @@
 {% block main %}
 
 <div class="flex flex-col mx-10 justify-around">
+  <p>{{ form.instance}} </p>
+  <p>{{ form.instance.id }} </p>
   <img class="z-10 w-36 h-36 mx-auto mt-10 shadow-xl rounded-full"
   src="{{ form.instance.picture_url }}" alt="profile"/>
   <div class="w-[640px] mx-auto shadow-xl rounded-xl mt-[-32px] mb-10 p-10 bg-zinc-100">
-    <form action="{% url 'quiz-member-update' pk=form.instance.id %}" method="POST">
+    <form  method="POST">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
           User

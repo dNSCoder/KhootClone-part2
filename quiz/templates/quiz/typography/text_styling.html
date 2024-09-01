@@ -1,0 +1,72 @@
+{% extends 'quiz/base.html' %}
+
+{% block main %}
+
+<!-- division tag ใช้สำหรับการแบ่งส่วนแสดงผลต่าง ๆ ในหน้าเว็บ -->
+<div class="flex mt-10"> 
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente, soluta?</p>
+</div>
+<!-- font size -->
+<div class="flex flex-col justify-center items-center mt-5"> 
+    <p class="text-2xl">Font size example:</p>
+    <p class="text-lg">Font lg</p>
+    <p class="text-2xl">Font 2xl</p>
+</div>
+<!-- font color -->
+<div class="flex flex-col justify-center items-center mt-5 bg-slate-200"> 
+    <p class="text-2xl text-green-800">Font color:</p>
+    <p class="text-lg text-red-600">Font lg red</p>
+    <p class="text-2xl text-blue-800">Font 2xl blue</p>
+</div>
+<!-- font style -->
+<div class="flex flex-col justify-center items-center mt-5"> 
+    <p class="text-2xl text-black">Font Style:</p>
+    <p class="text-lg text-red-600 uppercase">Font lg red uppercase</p>
+    <p class="text-lg text-green-600 italic">Font lg red italic</p>
+    <p class="text-2xl text-blue-800 lowercase">Font 2xl blue lowercase</p>
+</div>
+<!-- font weight -->
+<div class="flex flex-col justify-center items-center mt-5 bg-slate-200"> 
+    <p class="text-2xl text-black">Font weight:</p>
+    <p class="text-lg text-red-600 uppercase font-thin">Font lg red uppercase thin</p>
+    <p class="text-lg text-green-600 italic font-medium">Font lg red italic medium</p>
+    <p class="text-2xl text-blue-800 lowercase font-bold">Font 2xl blue lowercase bold</p>
+</div>
+<!-- text alginment -->
+<div class="flex flex-col justify-center mt-5"> 
+    <p class="text-2xl text-black text-center">Font align:</p>
+    <p class="text-lg text-red-600 uppercase text-center">Font lg red uppercase center</p>
+    <p class="text-lg text-green-600 italic text-left">Font lg red italic left</p>
+    <p class="text-2xl text-blue-800 lowercase text-right">Font 2xl blue lowercase right</p>
+</div>
+<!-- spacing -->
+<div class="flex flex-col justify-center items-center mt-5 bg-slate-200"> 
+    <p class="text-2xl text-black">Font weight:</p>
+    <p class="text-lg text-red-600 uppercase font-thin tracking-tighter">Font lg red uppercase thin</p>
+    <p class="text-lg text-green-600 italic font-medium tracking-widest">Font lg red italic medium</p>
+    <p class="text-2xl text-blue-800 lowercase font-bold tracking-normal">Font 2xl blue lowercase bold</p>
+</div>
+<!-- decorate -->
+<div class="flex flex-col justify-center items-center mt-5 "> 
+    <p class="text-2xl text-black">Font weight:</p>
+    <p class="text-lg text-red-600 uppercase underline">Font lg red uppercase thin</p>
+    <p class="text-lg text-green-600 italic overline">Font lg red italic medium</p>
+    <p class="text-2xl text-blue-800 lowercase line-through">Font 2xl blue lowercase bold</p>
+</div>
+<!-- text wrap -->
+<div class="flex flex-col justify-center items-center text-wrap bg-slate-200">
+    <div class="w-1/3">
+        <p class="text-2xl text-black">Font wrap:</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus repudiandae nihil voluptatem. Ab, laboriosam sunt natus blanditiis aut saepe voluptatum quae temporibus, beatae accusantium minus, nulla soluta? Sit, laudantium earum!</p>
+    </div>
+    
+</div>
+<div class="flex flex-col justify-center items-center text-nowrap bg-slate-200">
+    <div class="w-1/3">
+        <p class="text-2xl text-black">Font No-wrap:</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus repudiandae nihil voluptatem. Ab, laboriosam sunt natus blanditiis aut saepe voluptatum quae temporibus, beatae accusantium minus, nulla soluta? Sit, laudantium earum!</p>
+    </div>
+    
+</div>
+
+{% endblock %}

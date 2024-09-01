@@ -3,13 +3,17 @@ from quiz.views import *
 from quiz.classview import *
 
 urlpatterns = [
-    path('', home, name='quiz-home'),
+    # path('', home, name='quiz-home'),
+    path('', UserView.as_view(), name='quiz-users'),
     #path('users/', users, name='quiz-users'),
+    path('text-learning/', TextLearningView.as_view(), name='text-learning'),
+    path('layout-lerning/', LayoutLearningView.as_view(), name='layout-learning'),
     path('users/', UserView.as_view(), name='quiz-users'), # get from Class view
     path('users2/', UserTemplateView.as_view(), name='quiz-users-2'),
     path('users3/', UserListView.as_view(), name='quiz-users-3'),
-    path('user/<int:pk>/', UserDetailView.as_view(), name='quiz-user-detail'),
+    path('user/<int:pk>/', UserDetailView.as_view(), name='quiz-member-detail'),
     path('user/register/', UserRegisterView.as_view(), name='quiz-user-register'),
+    path('user/register2/', SignUpView.as_view(), name='quiz-user-register2'),
     path('user/login/', UserLoginView.as_view(), name='quiz-user-login'),
     path('user/logout/', UserLogoutView.as_view(), name='quiz-user-logout'),
     

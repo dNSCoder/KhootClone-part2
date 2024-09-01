@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'quiz',
     'tailwind',
     'theme',
-    'django_browser_reload'
+    'django_browser_reload',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
