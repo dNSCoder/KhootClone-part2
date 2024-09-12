@@ -1,0 +1,61 @@
+{% extends "quiz/base.html" %}
+{% block main %}
+<div class="flex flex-col items-center justify-center space-y-4 bg-slate-300 min-h-screen">
+    <h1 class="text-sxl">Variable Management</h1>
+    <div class="flex justify-center items-center space-x-6">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md">
+            <h1 class="text-2xl">Javascript State</h1>
+            <button class="bg-red-800 w-20 text-white" id="decrease">decrease</button>
+            <span id="count">0</span>
+            <button class="bg-green-800 w-20 text-white" id="increase">increase</button>
+        </div>
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
+        x-data="{ count: 0 }">
+            <h1 class="text-2xl">AlpineJS State</h1>
+            <button class="bg-red-800 w-20 text-white" @click="count--">decrease</button>
+            <span class="text-black font-xl " x-text="count"></span>
+            <p x-text="count"></p>
+            <button class="bg-green-800 w-20 text-white" @click="count++">increase</button>
+        </div>
+    </div>
+    
+    <h1 class="text-sxl">Show / Hide</h1>
+    <div class="flex justify-center items-center space-x-6">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
+        x-data="{isVisible: false, btn_msg: 'Show' }">
+            <h1 class="text-2xl">AlpineJS Show/Hide</h1>
+            <p class="text-lg capitalize" x-show="isVisible">hello world!.....</p>
+            <button class="bg-indigo-800 w-20 text-white capitalize" x-text="btn_msg" @click="isVisible = !isVisible; btn_msg = isVisible?'hide':'show'"></button>
+        </div>
+    </div>
+
+    <h1 class="text-sxl">Search in List</h1>
+    <div class="flex justify-center items-center space-x-6">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
+            x-data="{search: '', items:['Apple', 'Banana', 'Chicken'] }">
+            <input type="text" placeholder="Search here....." x-model="search" class="border p-2 rounded-lg shadow-md">
+            <ul>
+                <template x-for="item in items" :key="item">
+                    <li x-show="item.includes(search)" x-text="item"></li>
+                </template>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    let count = 0;
+    const countDisplay = document.getElementById('count');
+    const decreaseButton = document.getElementById('decrease');
+    const increaseButton = document.getElementById('increase');
+    
+    decreaseButton.addEventListener('click', () => {
+        count--;
+        countDisplay.textContent = count;
+    })
+    increaseButton.addEventListener('click', () => {
+        count++;
+        countDisplay.textContent = count;
+    })
+
+</script>
+{% endblock %}

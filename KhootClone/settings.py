@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
-    'django_countries',
 ]
 
 MIDDLEWARE = [
@@ -99,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
         'NAME': 'khootdb',
-        'USER': 'khootdbuser',
+        'USER': 'root',
         'PASSWORD': '1234',
         'PORT': '3306',
     },
