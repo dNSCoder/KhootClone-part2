@@ -60,6 +60,12 @@ class AlpineJSLearningView(LoginRequiredMixin, TemplateView):
     template_name = 'quiz/alpinejs/alpinejs_learning.html'
     login_url = 'quiz-user-login'
 
+class QuizView(LoginRequiredMixin, TemplateView):
+    template_name = 'quiz/quiz_day1.html'
+    login_url = 'quiz-user-login'
+
+
+
 class UserListView(ListView):
     model = User
     template_name = 'quiz/users.html'
@@ -67,6 +73,9 @@ class UserListView(ListView):
 
     def get_queryset(self):
         return User.objects.order_by('member__country')
+
+
+
 
 
 class UserDetailView(DetailView):

@@ -19,6 +19,8 @@ urlpatterns = [
     path('user/register2/', SignUpView.as_view(), name='quiz-user-register2'),
     path('user/login/', UserLoginView.as_view(), name='quiz-user-login'),
     path('user/logout/', UserLogoutView.as_view(), name='quiz-user-logout'),
+
+    path('quiz/', QuizView.as_view(), name='quiz-start'),
     
     
     
