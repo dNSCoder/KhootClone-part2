@@ -3,7 +3,7 @@
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -63,6 +63,70 @@ class AlpineJSLearningView(LoginRequiredMixin, TemplateView):
 class QuizView(LoginRequiredMixin, TemplateView):
     template_name = 'quiz/quiz_day1.html'
     login_url = 'quiz-user-login'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['questions'] = Question.objects.all().prefetch_related('choices')  # pull questions and choices together with prefetch_related
+        # questions = list(Question.objects.select_related().values('id', 'text', 'choices__id', 'choices__text', 'choices__correct'))
+        return context
+        # another way
+        # # ดึงข้อมูลของ Question ทั้งหมด
+        # questions = Question.objects.all()
+        
+        # # ดึง Choices สำหรับแต่ละ Question แยกกัน
+        # question_data = []
+        # for question in questions:
+        #     choices = Choice.objects.filter(question=question)
+        #     question_data.append({
+        #         'question': question,
+        #         'choices': choices
+        #     })
+
+class QuizResultsView(TemplateView):
+    template_name = 'quiz/result_day1.html'  # ชื่อของ template ที่ใช้แสดงผลลัพธ์
+
+    def post(self, request, *args, **kwargs):
+        correct_answers = 0
+        questions = Question.objects.all()
+
+        for question in questions:
+            # selected_choice = request.POST.get(f'question-{question.id}')
+            # or 
+            selected_choice = request.POST.get('question-' + str(question.id))
+            print(selected_choice)
+            print(question)
+            if selected_choice and Choice.objects.filter(id=selected_choice, correct=True).exists():
+                correct_answers += 1
+
+        return self.render_to_response({'correct_answers': correct_answers, 'total_questions': questions.count()})
+
+
+class QuizView2(LoginRequiredMixin, TemplateView):
+    template_name = 'quiz/quiz_day2.html'
+    login_url = 'quiz-user-login'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        attempt_id = self.request.session.get('current_attempt_id')
+        try:
+            member = Member.objects.get(user = self.request.user)
+        except Member.DoesNotExist:
+            return JsonResponse({'error': 'Member does not  exist'}, status=403)
+        # if no
+        if not attempt_id:
+            last_attempt = QuizAttempt.objects.filter(member=member).order_by('-created_at').first()
+            
+            if last_attempt:
+                attempt_number = last_attempt.attempt_number+1 #Next round
+            else:
+                attempt_number = 1 # First Start
+            
+            new_attempt = QuizAttempt.objects.create(member=member, attempt_number=attempt_number)
+            #save session value
+            self.request.session['current_attempt_id'] = new_attempt.id
+            attempt_id = new_attempt.id
+
+        attempt = get_object_or_404(QuizAttempt, id=attempt_id)
+        context['attempt'] = attempt
+        return context
 
 
 

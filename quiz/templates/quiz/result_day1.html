@@ -1,0 +1,8 @@
+{% extends 'quiz/base.html' %}
+{% block main %}
+<div class="flex flex-col justify-center items-center space-y-6 my-auto h-1/2">
+
+    <h1 class="text-2xl ">ผลลัพธ์</h1>
+    <p class="text-xl">คุณตอบถูก {{ correct_answers }} จาก {{ total_questions }} คำถาม</p>
+</div>
+{% endblock %}

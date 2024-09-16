@@ -69,3 +69,17 @@ def blurbg(req):
     res = HttpResponse(content_type='image/png')
     blurimg.save(res, 'PNG')
     return res
+
+
+def quiz_data(req):
+    questions = Question.objects.all()
+    questions_data = []
+    for question in questions:
+        choices = question.choices.all()
+        choices_data = [{'id': choice.id , 'text': choice.text} for choice in choices]
+        questions_data.append({
+            'id': question.id,
+            'text': question.text,
+            'choices': choices_data
+        })
+    return JsonResponse(questions_data, safe=False)

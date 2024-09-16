@@ -1,0 +1,84 @@
+
+{% extends 'quiz/base.html' %}
+
+{% block main %}
+<!-- ใช้ json_script สำหรับแปลง questions เป็น JSON ที่ปลอดภัย -->
+
+<div class="container mx-auto py-10">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-blue-600">Quiz Game</h1>
+        <p class="text-gray-600">ตอบคำถามภายในเวลาที่กำหนด!</p>
+    </div>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% else %}
+        <h1>แบบทดสอบ: รอบที่ {{ attempt.attempt_number }}</h1>
+    {% endif %}
+    <div class="container mx-auto p-4" x-data="quizApp()" x-init="startQuiz()">
+        <div x-show="currentQuestionIndex < questions.length">
+            <template x-if="questions.length != 0">
+                <h1 class="text-2xl font-bold mb-4" x-text="questions[currentQuestionIndex].text"></h1> 
+            </template>
+            
+            <input x-model="selectedAnswer">
+            
+
+            <div class="text-red-600 text-lg mt-4">เวลาที่เหลือ: <span x-text="timeRemaining"></span></div>
+        </div>
+
+        <div x-show="currentQuestionIndex >= questions.length">
+            <h1 class="text-2xl font-bold">คุณทำแบบทดสอบเสร็จแล้ว!</h1>
+            <button onclick="" class="btn btn-primary mt-5">
+                ไปยังหน้าผลลัพธ์
+            </button>
+        </div>
+    </div>
+</div>
+    
+
+<script>
+    function quizApp() {
+        return {
+            questions: [],
+            currentQuestionIndex: 0,
+            timeRemaining: 10,
+            timer: null,
+            selectedAnswer: null,
+
+            // โหลดคำถามจาก backend
+            async startQuiz() {
+                this.questions =  await (await fetch('/quiz-data')).json();
+                this.startTimer();
+            },
+
+
+            // จัดการเปลี่ยนคำถามเมื่อหมดเวลา
+            startTimer() {
+                this.timer = setInterval(() => {
+                    if (this.timeRemaining > 0) {
+                        this.timeRemaining--;
+                    } else {
+                        console.log('Times up');
+                        this.nextQuestion();
+                    }
+                }, 1000);
+            },
+
+            // เปลี่ยนไปยังคำถามถัดไป
+            nextQuestion() {
+                clearInterval(this.timer);
+                this.timeRemaining = 10; // ตั้งเวลาใหม่ 
+                this.currentQuestionIndex++;
+                if (this.currentQuestionIndex < this.questions.length) {
+                    this.startTimer();
+                }
+                else {
+                    //do Something
+                }
+            },
+            
+        };
+    }
+</script>
+{% endblock %}

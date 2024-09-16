@@ -9,16 +9,64 @@
   fields:
     question: 1
     text: นครศรีธรรมราช
-    correct: True
+    correct: False
 - model: quiz.Choice
   pk: 3
   fields:
     question: 1
     text: นครราชสีมา
-    correct: False
+    correct: True
 - model: quiz.Choice
   pk: 4
   fields:
     question: 1
     text: ระยอง
+    correct: False
+- model: quiz.Choice
+  pk: 5
+  fields:
+    question: 2
+    text: โลมา
+    correct: False
+- model: quiz.Choice
+  pk: 6
+  fields:
+    question: 2
+    text: อีกา
+    correct: True
+- model: quiz.Choice
+  pk: 7
+  fields:
+    question: 2
+    text: ม้าลาย
+    correct: False
+- model: quiz.Choice
+  pk: 8
+  fields:
+    question: 2
+    text: กระรอก
+    correct: False
+- model: quiz.Choice
+  pk: 9
+  fields:
+    question: 3
+    text: ยี่เป็ง
+    correct: True
+- model: quiz.Choice
+  pk: 10
+  fields:
+    question: 3
+    text: ตักบาตรเทโว
+    correct: False
+- model: quiz.Choice
+  pk: 11
+  fields:
+    question: 3
+    text: วิ่งควาย
+    correct: False
+- model: quiz.Choice
+  pk: 12
+  fields:
+    question: 3
+    text: บุญบั้งไฟ
     correct: False

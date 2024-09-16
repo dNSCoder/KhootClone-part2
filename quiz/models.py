@@ -46,7 +46,7 @@ class Question(TimeStampedModel):
 
 class Choice(TimeStampedModel):
     # id  primary key
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     text = models.TextField(default='', verbose_name='คำตอบ')
     correct = models.BooleanField(default=False)
 
@@ -58,16 +58,22 @@ class Choice(TimeStampedModel):
         verbose_name_plural = 'ตัวเลือก'
         verbose_name = 'ตัวเลือก'
 
+class QuizAttempt(TimeStampedModel):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    attempt_number = models.PositiveIntegerField(default=1)  # รอบการทำแบบทดสอบ
+
+    def __str__(self):
+        return f"{self.member} attempt on {self.created_at}"
+
 class Answer(TimeStampedModel):
     # id  primary key
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-
+    member = models.ForeignKey(Member, on_delete=models.CASCADE) #user who answers the question
+    question = models.ForeignKey(Question, on_delete=models.CASCADE) #question which answers
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE) #selected choice by user
+    attempt = models.ForeignKey(QuizAttempt, on_delete=models.CASCADE, default=1)
     def __str__(self):
         return f'{self.member} {self.question} {self.choice}'
 
     class Meta:
         verbose_name_plural = 'คำตอบ'
         verbose_name = 'คำตอบ'
-

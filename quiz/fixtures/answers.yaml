@@ -22,3 +22,27 @@
     question: 1
     text: ระยอง
     correct: False
+- model: quiz.Answer
+  pk: 5
+  fields:
+    question: 2
+    text: โลมา
+    correct: False
+- model: quiz.Answer
+  pk: 6
+  fields:
+    question: 2
+    text: อีกา
+    correct: False
+- model: quiz.Answer
+  pk: 7
+  fields:
+    question: 2
+    text: ม้าลาย
+    correct: False
+- model: quiz.Answer
+  pk: 8
+  fields:
+    question: 2
+    text: กระรอก
+    correct: False
