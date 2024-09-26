@@ -127,7 +127,34 @@ class QuizView2(LoginRequiredMixin, TemplateView):
         attempt = get_object_or_404(QuizAttempt, id=attempt_id)
         context['attempt'] = attempt
         return context
+class QuizResultView2(TemplateView):
+    template_name = 'quiz/result_day2.html'
+    
+    def get_context_data(self, **kwargs):
+        try:
+            member = Member.objects.get(user=self.request.user)
+        except Member.DoesNotExist:
+            return JsonResponse({'error': 'Member not found'}, status=404)
+        context = super().get_context_data(**kwargs)
 
+        # ดึงผลลัพธ์ล่าสุดของผู้ใช้ที่ล็อกอิน
+        user_result = Result.objects.filter(member=member).order_by('created_at').last()
+        #user_result = Result.objects.filter(member=member).order_by('-created_at').first()
+        context['user_result'] = user_result
+
+        # ดึงคำตอบล่าสุดของผู้เล่นคนอื่น (โหลดด้วย HTMX)
+        others_latest_result = Result.objects.exclude(member=member).order_by('created_at').reverse()[:10]
+        #others_latest_result = Result.objects.exclude(member=member).order_by('-created_at')[:10]
+        context['others_latest_result'] = others_latest_result
+        try:
+            attempt = QuizAttempt.objects.filter(member=member).order_by('created_at').last()
+        except QuizAttempt.DoesNotExist:
+            attempt = None
+        
+        context['user_attempt'] = attempt
+            
+
+        return context
 
 
 class UserListView(ListView):

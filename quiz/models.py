@@ -77,3 +77,8 @@ class Answer(TimeStampedModel):
     class Meta:
         verbose_name_plural = 'คำตอบ'
         verbose_name = 'คำตอบ'
+
+class Result(TimeStampedModel):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)  # ผู้ใช้ที่ทำ quiz
+    score = models.IntegerField()  # คะแนน
+    completed_at = models.DateTimeField(auto_now_add=True)  # เวลาที่ทำเสร็จ

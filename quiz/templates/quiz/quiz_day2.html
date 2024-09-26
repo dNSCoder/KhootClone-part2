@@ -17,19 +17,37 @@
     {% endif %}
     <div class="container mx-auto p-4" x-data="quizApp()" x-init="startQuiz()">
         <div x-show="currentQuestionIndex < questions.length">
-            <template x-if="questions.length != 0">
-                <h1 class="text-2xl font-bold mb-4" x-text="questions[currentQuestionIndex].text"></h1> 
+            <h1 class="text-2xl font-bold mb-4" x-text="questions[currentQuestionIndex].text"></h1> 
+            <!-- <input x-model="selectedAnswer"> -->
+            <template  x-for="(choice, index) in questions[currentQuestionIndex].choices" :key="choice.id">
+                <label
+                    x-bind:class="{
+                        'bg-red-500 text-white': selectedAnswer !== choice.id && index % 4 === 0,
+                        'bg-blue-500 text-white': selectedAnswer !== choice.id && index % 4 === 1,
+                        'bg-green-500 text-white': selectedAnswer !== choice.id && index % 4 === 2,
+                        'bg-yellow-500 text-white': selectedAnswer !== choice.id && index % 4 === 3,
+                        'bg-red-900 text-white': selectedAnswer == choice.id && index % 4 === 0,
+                        'bg-blue-900 text-white': selectedAnswer == choice.id && index % 4 === 1,
+                        'bg-green-900 text-white': selectedAnswer == choice.id && index % 4 === 2,
+                        'bg-yellow-900 text-white': selectedAnswer == choice.id && index % 4 === 3,
+                    }"
+                    class="p-4 rounded-lg flex my-2 cursor-pointer justify-center"
+                
+                > 
+                <!-- or can use forloop.counter0 get number -->
+                    <input type="radio" :id="'choice-' + choice.id" :name="'question-' + questions[currentQuestionIndex].id" :value="choice.id" x-model="selectedAnswer" class="hidden">
+                    <span x-text="choice.text"></span>
+                    <span x-text="choice.id"></span>
+                    <span x-text="index"></span>
+                </label>
             </template>
-            
-            <input x-model="selectedAnswer">
-            
 
             <div class="text-red-600 text-lg mt-4">เวลาที่เหลือ: <span x-text="timeRemaining"></span></div>
         </div>
 
         <div x-show="currentQuestionIndex >= questions.length">
             <h1 class="text-2xl font-bold">คุณทำแบบทดสอบเสร็จแล้ว!</h1>
-            <button onclick="" class="btn btn-primary mt-5">
+            <button onclick="goToResultPage()" class="btn btn-primary mt-5">
                 ไปยังหน้าผลลัพธ์
             </button>
         </div>
@@ -38,6 +56,9 @@
     
 
 <script>
+    function goToResultPage() {
+        window.location.href = "{% url 'quiz-results2' %}";
+    }
     function quizApp() {
         return {
             questions: [],
@@ -46,12 +67,30 @@
             timer: null,
             selectedAnswer: null,
 
-            // โหลดคำถามจาก backend
+            // โหลดคำถามจาก backend (ใช้ htmx)
             async startQuiz() {
                 this.questions =  await (await fetch('/quiz-data')).json();
                 this.startTimer();
             },
 
+            async submitAnswer() {
+                // ส่งคำตอบไปยัง backend
+                const formData = new FormData();
+                formData.append('question_id', this.questions[this.currentQuestionIndex].id);
+                formData.append('choice_id', this.selectedAnswer);
+                if (this.selectedAnswer) {
+                    await fetch('/submit-answer/', {
+                        method: 'POST',
+                        headers: {
+                            //'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: formData
+                    });
+                }
+                this.selectedAnswer = null;
+                this.nextQuestion();  // โหลดคำถามถัดไป
+            },
 
             // จัดการเปลี่ยนคำถามเมื่อหมดเวลา
             startTimer() {
@@ -59,8 +98,8 @@
                     if (this.timeRemaining > 0) {
                         this.timeRemaining--;
                     } else {
-                        console.log('Times up');
-                        this.nextQuestion();
+                        this.submitAnswer();
+                        //this.nextQuestion();
                     }
                 }, 1000);
             },
@@ -68,16 +107,30 @@
             // เปลี่ยนไปยังคำถามถัดไป
             nextQuestion() {
                 clearInterval(this.timer);
+                this.selectedAnswer = null;  // ล้างการเลือกคำตอบ
                 this.timeRemaining = 10; // ตั้งเวลาใหม่ 
                 this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
                     this.startTimer();
                 }
                 else {
-                    //do Something
+                    this.finishQuiz()
                 }
             },
             
+            finishQuiz() {
+                fetch('/calculate-score/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        console.log("Send to backend!");
+                    }
+                });
+            }
         };
     }
 </script>

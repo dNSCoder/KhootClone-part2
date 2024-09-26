@@ -23,9 +23,11 @@ urlpatterns = [
     path('quiz/', QuizView.as_view(), name='quiz-start'),
     path('quiz/results/', QuizResultsView.as_view(), name='quiz-results'),
     path('quiz2/', QuizView2.as_view(), name='quiz2-start'),
-    
+    path('quiz2/results2/', QuizResultView2.as_view(), name='quiz-results2'),
     
     path('quiz-data/', quiz_data, name='quiz-data'),
+    path('submit-answer/', submit_answer, name='submit-answer'),
+    path('calculate-score/', calculate_score, name='calculate-score'),
 
 
     
