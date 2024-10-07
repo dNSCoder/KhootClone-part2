@@ -1,0 +1,92 @@
+{% extends 'quiz/base.html' %}
+{% block main %}
+
+<div class="flex flex-col justify-center items-center p-8" x-data="{ formDeleteOpen: false}" hx-headers='{ "X-CSRFToken": "{{ csrf_token}}"}'>
+    <div class="my-4 flex flex-col gap-4">
+        <h1 class="text-xl font-bold mb-4">คำถามทั้งหมด</h1>
+
+        <!-- ปุ่มสร้างคำถามใหม่ -->
+        <button 
+            hx-get="{% url 'question_create' %}" 
+            hx-target="#modal-content" 
+            hx-swap="innerHTML" 
+            class="bg-purple-500 text-white px-4 py-2 rounded cursor-pointer">
+           + สร้างคำถามใหม่
+        </button>
+
+    </div>
+    <div id="question-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {% for question in questions %}
+            <div class="bg-white p-4 rounded-lg shadow-md" id="question-{{question.id}}">
+                <p class="text-lg font-semibold">{{ question.text }}</p>
+                
+                <div class="flex mt-4 space-x-2 justify-end">
+                    <button 
+                        hx-get="{% url 'question_detail' question.id %}" 
+                        hx-target="#modal-content" 
+                        hx-swap="innerHTML"
+                        class="bg-blue-500 text-white px-2 py-1 rounded cursor-pointer">
+                        ดูรายละเอียด
+                    </button>
+                    <button 
+                        hx-get="{% url 'question_edit' question.id %}" 
+                        hx-target="#modal-content" 
+                        hx-swap="innerHTML"
+                        class="bg-green-500 text-white px-2 py-1 rounded cursor-pointer">
+                        แก้ไข
+                    </button>
+                    <button 
+                        hx-get ="{% url 'question_delete' question.id %}" 
+                        hx-target="#questionDelete" 
+                        hx-swap="innerHTML"
+                        class="bg-red-500 text-white px-2 py-1 rounded cursor-pointer"
+                        @click = "formDeleteOpen = true">
+                        ลบ
+                    </button>
+                    <!-- <button 
+                        hx-delete="{% url 'question_delete' question.id %}"
+                        hx-confirm="คุณแน่ใจหรือไม่ที่จะลบคำถามนี้?"
+                        hx-target="#question-{{ question.id }}"
+                        hx-swap="outerHTML"
+                        class="bg-red-500 text-white px-2 py-1 rounded">
+                        ลบ
+                    </button> -->
+                </div>
+            </div>
+        {% empty %}
+            <p>ไม่มีคำถามในระบบ</p>
+        {% endfor %}
+    </div>
+    <div 
+        x-show="formDeleteOpen"
+        @keydown.escape.window = "formDeleteOpen = false"      
+        class="fixed z-20 inset-0 overflow-y-auto"
+        >
+        <div class="flex items-center justify-center min-h-screen">
+            <div id="questionDelete" class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full p-8">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex flex-col justify-center items-center">
+    <div id="modal-content"
+        class="flex max-w-1/2 justify-center m-4 p-4"
+        >
+    </div>
+    <button id="close-button" onclick="closeModal()" class="hidden my-4 bg-red-600 text-white px-4 py-2 rounded">ปิด</button>
+</div>
+<script>
+    function closeModal(){
+        document.getElementById('modal-content').innerHTML = '';
+        document.getElementById('close-button').classList.add('hidden');
+    }
+    
+    document.addEventListener('htmx:afterSwap', (event) => {
+        if (event.detail.target.id === 'modal-content' && event.detail.target.innerHTML.trim() !== ''){
+            document.getElementById('close-button').classList.remove('hidden');
+        }
+    })
+
+    
+</script>
+{% endblock %}

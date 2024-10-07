@@ -1,0 +1,15 @@
+<div class="p-4"></div>
+    <h2 class="text-xl mb-4">คุณต้องการลบคำถามนี้หรือไม่?</h2>
+    <p class="mb-4">คำถาม: "{{ object.text }}"</p>
+    <p class="mb-4">คำถาม ID: "{{ object.id }}"</p>
+    <form method="POST"
+    hx-delete="{% url 'question_delete' object.id %}"
+    hx-target="#question-{{ object.id }}"
+    hx-swap="delete"
+    @htmx:after-request.camel="formDeleteOpen = false; closeModal()"
+    >
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded mr-2">ลบ</button>
+        <button type="button" @click="formDeleteOpen = false" class="bg-gray-500 text-white px-4 py-2 rounded">ยกเลิก</button>
+    </form>
+</div>

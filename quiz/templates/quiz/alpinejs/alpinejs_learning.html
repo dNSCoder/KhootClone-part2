@@ -1,61 +1,161 @@
-{% extends "quiz/base.html" %}
+{% extends 'quiz/base.html' %}
+
 {% block main %}
-<div class="flex flex-col items-center justify-center space-y-4 bg-slate-300 min-h-screen">
-    <h1 class="text-sxl">Variable Management</h1>
+
+<div class="flex flex-col items-center justify-center space-y-4  bg-slate-300 min-h-screen">
+    <h1 class="text-2xl">Variable management</h1>
+    <div class="flex justify-center items-center space-x-6">
+      <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md">
+          <h1 class="text-2xl">Javascript State</h1>
+          <button class="bg-red-800 w-20 text-white" id="decrease">decrease</button>
+          <span id="count">0</span>
+          <button class="bg-green-800 w-20 text-white" id="increase">increase</button>
+      </div>
+      <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
+      x-data="{ count: 0 }">
+          <h1 class="text-2xl">AlpineJS State</h1>
+          <button class="bg-red-800 w-20 text-white" @click="count--">decrease</button>
+          <!-- <span class="text-black font-xl " x-text="count"></span> -->
+          <p x-text="count"></p>
+          <button class="bg-green-800 w-20 text-white" @click="count++">increase</button>
+      </div>
+    </div>
+    <h1 class="text-2xl">Show / Hide </h1>
     <div class="flex justify-center items-center space-x-6">
         <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md">
-            <h1 class="text-2xl">Javascript State</h1>
-            <button class="bg-red-800 w-20 text-white" id="decrease">decrease</button>
-            <span id="count">0</span>
-            <button class="bg-green-800 w-20 text-white" id="increase">increase</button>
+            <h1 class="text-2xl">Javascript toggle</h1>
+            <p  id="message" style="display: none;" class="text-lg text-black">Hello world!</p>
+            <button class="bg-blue-800 w-16 text-white capitalize" id="toggleBtn">show</button>
         </div>
-        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
-        x-data="{ count: 0 }">
-            <h1 class="text-2xl">AlpineJS State</h1>
-            <button class="bg-red-800 w-20 text-white" @click="count--">decrease</button>
-            <span class="text-black font-xl " x-text="count"></span>
-            <p x-text="count"></p>
-            <button class="bg-green-800 w-20 text-white" @click="count++">increase</button>
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md"
+        x-data="{isVisible: false, btn_msg: 'show'}">
+            <h1 class="text-2xl">AlpineJS toggle</h1>
+            <p class="text-lg text-black" x-show="isVisible">Hello world!</p>
+            <button class="bg-blue-800 w-16 text-white capitalize" @click="isVisible = !isVisible; btn_msg = isVisible?'hide':'show';" x-text="btn_msg"></button>
+            
         </div>
     </div>
-    
-    <h1 class="text-sxl">Show / Hide</h1>
+    <h1 class="text-2xl">Search in List</h1>
     <div class="flex justify-center items-center space-x-6">
-        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
-        x-data="{isVisible: false, btn_msg: 'Show' }">
-            <h1 class="text-2xl">AlpineJS Show/Hide</h1>
-            <p class="text-lg capitalize" x-show="isVisible">hello world!.....</p>
-            <button class="bg-indigo-800 w-20 text-white capitalize" x-text="btn_msg" @click="isVisible = !isVisible; btn_msg = isVisible?'hide':'show'"></button>
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md">
+            <h1 class="text-2xl">Javascript Search</h1>
+            <input type="text" id="searchInput" placeholder="search..." class="border p-2 rounded">
+  
+            <ul id="itemList">
+              <li>Apple</li>
+              <li>Banana</li>
+              <li>Cherry</li>
+              <li>Date</li>
+              <li>Elderberry</li>
+            </ul>
         </div>
-    </div>
-
-    <h1 class="text-sxl">Search in List</h1>
-    <div class="flex justify-center items-center space-x-6">
-        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md" 
-            x-data="{search: '', items:['Apple', 'Banana', 'Chicken'] }">
-            <input type="text" placeholder="Search here....." x-model="search" class="border p-2 rounded-lg shadow-md">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md"
+        x-data="{ search: '', items_list: ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'] }">
+        <h1 class="text-2xl">AlpineJS Search</h1>
+            <input type="text" placeholder="search..." x-model="search" class="border p-2 rounded"> 
+            <!-- model bind content html with variable -->
             <ul>
-                <template x-for="item in items" :key="item">
-                    <li x-show="item.includes(search)" x-text="item"></li>
-                </template>
+              <template x-for="item in items_list" :key="item">
+                <li x-show="item.toLowerCase().includes(search.toLowerCase())" x-text="item">
+                </li>
+              </template>
             </ul>
         </div>
     </div>
+    <h1 class="text-2xl">Show / Hide </h1>
+    <div class="flex justify-center items-center space-x-6">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md"
+        x-data="{answer: null}">
+            <input type="radio" value="yes" x-model="answer">
+            <input type="radio" value="no" x-model="answer">
+             
+            <div class="text-lg text-black">Answer: <span x-text="answer"></span></div>
+        </div>
+    </div>
+    <h1 class="text-2xl">Show / Hide </h1>
+    <div class="flex justify-center items-center space-x-6">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md"
+        x-data="{color: ''}">
+            <select x-model="color">
+                <template x-for="color in ['Red', 'Orange', 'Yellow']">
+                    <option x-text="color"></option>
+                </template>
+            </select>
+             
+            <p class="text-lg text-black">Color: <span x-text="color"></span></p>
+        </div>
+    </div>
+    <h1 class="text-2xl">Show / Hide </h1>
+    <div class="flex justify-center items-center space-x-6">
+        <div class="flex flex-col justify-center items-center space-y-4 w-64 h-64 bg-white rounded-md"
+        x-data="{range: 0}">
+            <input type="range" x-model="range" min="0" max="1" step="0.1">
+            <p class="text-lg text-black">Value: <span x-text="range"></span></p>
+        </div>
+    </div>
 </div>
-<script type="text/javascript">
+<script>
     let count = 0;
     const countDisplay = document.getElementById('count');
     const decreaseButton = document.getElementById('decrease');
     const increaseButton = document.getElementById('increase');
-    
+
     decreaseButton.addEventListener('click', () => {
         count--;
-        countDisplay.textContent = count;
-    })
+        countDisplay.innerHTML = count;
+        //countDisplay.textContent = count; ใช้ตัวนี้ก็ได้
+        
+    });
+
     increaseButton.addEventListener('click', () => {
         count++;
-        countDisplay.textContent = count;
-    })
+        countDisplay.innerHTML = count;
+        //countDisplay.textContent = count;
+    });
+    
+    //toggle show hide
+    const toggleBtn = document.getElementById('toggleBtn');
+    const message = document.getElementById('message');
+    
+    toggleBtn.addEventListener('click', function() {
+      if (message.style.display === 'none') {
+        message.style.display = 'block';
+        toggleBtn.textContent = 'hide';
+      } else {
+        message.style.display = 'none';
+        toggleBtn.textContent = 'show';
+      }
+    });
+    
+    //seach content
+    /*const food = ['egg', 'banana', 'milk', 'fish'];
+    let list_html = '';
+    
+    for (let i = 0; i < food.length; i++) {
+        list_html += '<li>' + food[i] + '</li>';
+    }
+    
+    document.getElementById('itemList').innerHTML = list_html;*/
+    const searchInput = document.getElementById('searchInput');
+    const itemList = document.getElementById('itemList');
+    const items = itemList.getElementsByTagName('li');
 
-</script>
+    /*searchInput.onkeyup = () => {
+        list='';
+        const keywords = this.value
+        const search = food.filter(item => item.startswith(keywords));
+    }*/
+    searchInput.addEventListener('input', function() {
+      const filter = searchInput.value.toLowerCase();
+      
+      for (let i = 0; i < items.length; i++) {
+        const itemText = items[i].textContent || items[i].innerText;
+        if (itemText.toLowerCase().includes(filter)) {
+          items[i].style.display = '';
+        } else {
+          items[i].style.display = 'none';
+        }
+      }
+    });
+  </script>
 {% endblock %}

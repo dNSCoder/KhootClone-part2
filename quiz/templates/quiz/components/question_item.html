@@ -1,0 +1,36 @@
+<div class="bg-white p-4 rounded-lg shadow-md" id="question-{{question.id}}">
+    <p class="text-lg font-semibold">{{ question.text }}</p>
+    
+    <div class="flex mt-4 space-x-2 justify-end">
+        <button 
+            hx-get="{% url 'question_detail' question.id %}" 
+            hx-target="#modal-content" 
+            hx-swap="innerHTML"
+            class="bg-blue-500 text-white px-2 py-1 rounded cursor-pointer">
+            ดูรายละเอียด
+        </button>
+        <button 
+            hx-get="{% url 'question_edit' question.id %}" 
+            hx-target="#modal-content" 
+            hx-swap="innerHTML"
+            class="bg-green-500 text-white px-2 py-1 rounded cursor-pointer">
+            แก้ไข
+        </button>
+        <button 
+            hx-get ="{% url 'question_delete' question.id %}" 
+            hx-target="#questionDelete" 
+            hx-swap="innerHTML" 
+            @click = "formDeleteOpen = true"
+            class="bg-red-500 text-white px-2 py-1 rounded cursor-pointer">
+            ลบ
+        </button>
+        <!-- <button 
+            hx-delete="{% url 'question_delete' question.id %}" 
+            hx-confirm="คุณแน่ใจหรือไม่ที่จะลบคำถามนี้?"
+            hx-target="#question-{{ question.id }}"
+            hx-swap="outerHTML"
+            class="bg-red-500 text-white px-2 py-1 rounded">
+            ลบ
+        </button> -->
+    </div>
+</div>

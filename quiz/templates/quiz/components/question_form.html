@@ -1,0 +1,75 @@
+<!-- templates/question_form.html -->
+<div class="flex flex-col items-center justify-center">
+    <h1 class="text-2xl my-4">Create/Update Question</h1>
+
+<form method="post" 
+    hx-post="{% if question %}{% url 'question_edit' question.id %}{% else %}{% url 'question_create' %}{% endif %}"
+    hx-target="{% if question %}#question-{{ question.id }}{% else %}#question-list{% endif %}"
+    hx-swap="{% if question %}outerHTML{% else %}beforeend{% endif %}"
+    >
+    {% csrf_token %}
+    
+    <!-- ส่วนของคำถาม -->
+    <div class="mb-6">
+        <label for="text" class="block mb-2 text-sm font-medium text-gray-900">คำถาม:</label>
+        <input type="text" name="text" id="text" 
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+            value="{% if question %}{{ question.text }}{% else %}{{ '' }}{% endif %}" required>
+    </div>
+
+    <!-- ส่วนของตัวเลือก -->
+    <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900">กรุณาระบุตัวเลือก พร้อมข้อที่ถูก:</label>
+        
+        <!-- ตัวเลือกที่ 1 -->
+        <div class="flex items-center mb-2">
+            <input type="radio" name="correct_choice" value="0" id="choice_1" 
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" 
+                {% if question and question.choices.all.0.correct %} checked {% endif %}>
+            <input type="text" name="choices[]" id="choice_text_1"
+                class="ml-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                value="{% if question and question.choices.count > 0 %}{{ question.choices.all.0.text }}{% endif %}" required>
+        </div>
+
+        <!-- ตัวเลือกที่ 2 -->
+        <div class="flex items-center mb-2">
+            <input type="radio" name="correct_choice" value="1" id="choice_2" 
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" 
+                {% if question and question.choices.all.1.correct %} checked {% endif %}>
+            <input type="text" name="choices[]" id="choice_text_2"
+                class="ml-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                value="{% if question and question.choices.count > 1 %}{{ question.choices.all.1.text }}{% endif %}" required>
+        </div>
+
+        <!-- ตัวเลือกที่ 3 -->
+        <div class="flex items-center mb-2">
+            <input type="radio" name="correct_choice" value="2" id="choice_3" 
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" 
+                {% if question and question.choices.all.2.correct %} checked {% endif %}>
+            <input type="text" name="choices[]" id="choice_text_3"
+                class="ml-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                value="{% if question and question.choices.count > 2 %}{{ question.choices.all.2.text }}{% endif %}" required>
+        </div>
+
+        <!-- ตัวเลือกที่ 4 -->
+        <div class="flex items-center">
+            <input type="radio" name="correct_choice" value="3" id="choice_4" 
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" 
+                {% if question and question.choices.all.3.correct %} checked {% endif %}>
+            <input type="text" name="choices[]" id="choice_text_4"
+                class="ml-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                value="{% if question and question.choices.count > 3 %}{{ question.choices.all.3.text }}{% endif %}" required>
+        </div>
+        <!-- <div class="flex items-center">
+            <input type="radio" name="correct_choice" value="4" id="choice_4" 
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" 
+                {% if question and question.choices.all.3.correct %} checked {% endif %}>
+            <input type="text" name="choice_text_4" id="choice_text_4"
+                class="ml-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                value="{% if question and question.choices.count > 3 %}{{ question.choices.all.3.text }}{% endif %}" required>
+        </div> -->
+    </div>
+
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">บันทึก</button>
+</form>
+</div>

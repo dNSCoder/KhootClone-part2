@@ -31,7 +31,7 @@ class UserMemberForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = '__all__'
+        fields = ['text']
 
 class MemberForm(forms.ModelForm):
     class Meta:

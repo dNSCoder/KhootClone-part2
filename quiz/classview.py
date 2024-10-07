@@ -11,8 +11,9 @@ from django.views.generic.base import View, TemplateView
 from quiz.models import *
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserRegisterForm, UserMemberForm
+from .forms import UserRegisterForm, UserMemberForm, QuestionForm
 from django.urls import reverse_lazy
+from django.template.loader import render_to_string
 
 class UserView(View):
     def get(self, request):
@@ -266,12 +267,110 @@ class UserLogoutView(LogoutView):
     next_page = reverse_lazy('quiz-user-login')
         
 
-## Create Update Delete
+class QuestionListView(ListView):
+    model = Question
+    context_object_name = 'questions'
+    template_name = 'quiz/questions_list.html'
+
+class QuestionDetailView(DetailView):
+    model = Question
+    template_name = 'quiz/components/question_detail.html'
+
 class QuestionCreateView(CreateView):
     model = Question
-    #fields = ['member', 'text']
-    #fields = '__all__'
-    fields = ['text']
+    form_class = QuestionForm
+    template_name = 'quiz/components/question_form.html'
+    success_url = reverse_lazy('questions_list')
+
+    def form_valid(self, form):
+        # บันทึกคำถามก่อน
+        # form question use for one request text of question
+        response = super().form_valid(form)
+        question = self.object
+
+        choices_text = self.request.POST.getlist('choices[]')
+        correct_choice_index = int(self.request.POST.get('correct_choice'))
+
+        for i in range(len(choices_text)):
+            choice_text = choices_text[i]
+            
+            Choice.objects.create(
+            
+            question = self.object,
+            text = choice_text,
+            correct = (i == correct_choice_index)
+            #return 1 if equal 
+            )
+         # check request from htmx
+        if 'HX-request' in self.request.headers:
+            # return TemplateResponse(self.request, 'quiz/components/question_item.html', {'question': question})
+            rendered_question = render_to_string('quiz/components/question_item.html', {'question': question})
+            return HttpResponse(rendered_question)
+
+        return response
+
+class QuestionUpdateView(UpdateView):
+    model = Question
+    form_class = QuestionForm
+    template_name = 'quiz/components/question_form.html'
+    success_url = reverse_lazy('questions_list')
+    def form_valid(self, form):
+        # บันทึกคำถาม
+        response = super().form_valid(form)
+        question = self.object
+        
+        choices_text = self.request.POST.getlist('choices[]')
+        correct_choice_index = int(self.request.POST.get('correct_choice'))
+        
+        # อัพเดตตัวเลือก (choices)
+        choices = question.choices.all()  # ตัวเลือกทั้งหมดที่เชื่อมกับ question นี้
+        for i, choice in enumerate(choices):
+            #use enumerate for access choice data and index
+            choice.text = choices_text[i]  # อัปเดตข้อความของตัวเลือก
+            choice.correct = (i == correct_choice_index)  # ตั้งค่าว่าตัวเลือกนี้เป็นตัวเลือกที่ถูกต้องหรือไม่
+            choice.save()  # บันทึกการเปลี่ยนแปลงลงในฐานข้อมูล
+        
+        if 'HX-request' in self.request.headers:
+            # return TemplateResponse(self.request, 'quiz/components/question_item.html', {'question': question})
+            rendered_question = render_to_string('quiz/components/question_item.html', {'question': question})
+            return HttpResponse(rendered_question)
+        # for i in range(len(choices)):
+        #     choice = choices[i]
+        #     choice.text = self.request.POST.getlist('choices[]')[i]
+        #     choice.correct = (i == correct_choice_index)
+        #     choice.save()
+
+        return response
+
+
+
+class QuestionDeleteView(DeleteView):
+    model = Question
+    template_name = 'quiz/components/question_confirm_delete.html'
+    success_url = reverse_lazy('questions_list')
+
+    def delete(self, request, *args, **kwargs):
+        # ตรวจสอบคำขอว่าเป็น HTMX หรือไม่
+        response = super().delete(request, *args, **kwargs)
+        if request.headers.get('HX-Request'):
+            # หากเป็นคำขอ HTMX ส่ง JSON กลับเพื่ออัปเดตหน้า
+            print("yes HTMX request")
+            return JsonResponse({
+                'success': True,
+                'message': 'คำถามถูกลบเรียบร้อยแล้ว'
+            })
+        return response
+
+
+
+
+
+
+
+
+
+
+
 
 class ChoiceCreateView(CreateView):
     model = Choice

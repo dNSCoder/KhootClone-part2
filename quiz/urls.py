@@ -38,7 +38,18 @@ urlpatterns = [
     path('bg/', bg),
     path('blurbg/', blurbg),
 
-    path('question/create/', QuestionCreateView.as_view(), name='quiz-question-create'),
+
+    path('quiz/questions/', QuestionListView.as_view(), name='questions_list'),
+    path('quiz/question/create/', QuestionCreateView.as_view(), name='question_create'),
+    path('quiz/question/view/<int:pk>/', QuestionDetailView.as_view(), name='question_detail'),
+    path('quiz/question/update/<int:pk>/', QuestionUpdateView.as_view(), name='question_edit'),
+    path('quiz/question/delete/<int:pk>/', QuestionDeleteView.as_view(), name='question_delete'),
+
+
+
+
+
+
 
     path('choice/create/', ChoiceCreateView.as_view(), name='quiz-choice-create'),
     path('choice/update/<int:pk>/', ChoiceUpdateView.as_view(), name='quiz-choice-update'),
